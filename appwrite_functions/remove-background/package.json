@@ -1,0 +1,11 @@
+{
+  "name": "remove-background",
+  "version": "1.0.0",
+  "description": "Downloads image from Appwrite Storage, removes background via Remove.bg, re-uploads result",
+  "main": "src/main.js",
+  "dependencies": {
+    "node-appwrite": "^13.0.0",
+    "node-fetch": "^2.7.0",
+    "sharp": "^0.33.0"
+  }
+}

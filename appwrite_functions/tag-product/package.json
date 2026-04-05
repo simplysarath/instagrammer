@@ -1,0 +1,10 @@
+{
+  "name": "tag-product",
+  "version": "1.0.0",
+  "description": "Downloads image from Appwrite Storage and calls Ximilar Fashion Tagging API",
+  "main": "src/main.js",
+  "dependencies": {
+    "node-appwrite": "^13.0.0",
+    "node-fetch": "^2.7.0"
+  }
+}
