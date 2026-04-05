@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter build:*)",
+      "Read(//c/Users/simpl/AppData/Local/**)",
+      "Read(//c/Users/simpl/flutter/**)",
+      "Read(//c/Users/simpl/**)",
+      "Bash(/c/Users/simpl/flutter/bin/flutter build:*)"
+    ]
+  }
+}

@@ -78,7 +78,7 @@
   Acceptance: Typing "red saree" in home screen search returns matching products grouped by category. Voice input populates search bar and returns results. Searching from within Sarees category returns only sarees. Empty search shows empty state (not a blank screen).
   Verify: Add a product tagged color=red, garment_type=saree. Search "red saree" from home — confirm it appears under Sarees category in results. Test voice input if mic permission is granted.
 
-- [ ] **12. Submit to Devpost**
+- [x] **12. Submit to Devpost**
   Spec ref: `prd.md > What We're Building`
   What to build: Build a release APK (`flutter build apk --release`). Take screenshots of: home screen with products, upload flow (tag review screen), share tray expanded, search results. Write the Devpost project story: "A private AI-powered product catalog for boutique owners — upload photos, AI auto-tags garment type, fabric, color and occasion, and the owner can search inventory and share curated product selections to customers via WhatsApp or Instagram DM in under 30 seconds." Fill in Devpost submission: project name (Sithara), tagline, description, built-with tags (Flutter, Dart, Appwrite, Riverpod, go_router, Ximilar, Remove.bg), screenshots, link to GitHub repo (`https://github.com/simplysarath/instagrammer`), upload docs/ artifacts (scope.md, prd.md, spec.md, checklist.md). Submit.
   Acceptance: Devpost submission is live with green "Submitted" badge. Project name, tagline, description, built-with tags, screenshots, and repo link are all present. Description accurately reflects what was built.
