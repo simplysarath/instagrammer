@@ -39,4 +39,14 @@
 
 ## /checklist
 
-_In progress._
+- **Build mode:** Autonomous — straight through, no verification checkpoints. Sharat is taking a break and wants the agent to work uninterrupted.
+- **Verification:** None. No checkpoints between items.
+- **Git cadence:** Commit after each checklist item with message `Complete step N: [title]`.
+- **Comprehension checks:** N/A (autonomous mode).
+- **Check-in cadence:** N/A (autonomous mode).
+- **Sequencing logic:** Scaffold → data models + Appwrite infra → auth → home screen → upload/storage → Appwrite Functions → bg removal + tag review + save → category/collection screens → product detail + edit → share tray → search → Devpost. Each step unblocks the next. Sharat identified scaffold, catalog model/object structure, and infra as the critical first block — auth added as an equally critical prerequisite (go_router redirects block all navigation without it).
+- **Items:** 12 items, estimated ~4 hours total.
+- **Deepening rounds:** 0 rounds. Sharat accepted the proposed sequence and item list without modification. He was focused and wanted to move fast.
+- **Active shaping:** Low at this stage — Sharat confirmed scaffold/model/infra priority unprompted (aligned with spec dependencies), accepted autonomous mode recommendation for his experience level, and chose no verification (straight through). No pushback on item order or granularity.
+- **Devpost submission:** APK + screenshots. No live deployment. Core story: "A private AI-powered product catalog for boutique owners — AI auto-tags garment type, fabric, color and occasion, owner searches inventory and shares curated selections to customers via WhatsApp or Instagram DM in under 30 seconds." GitHub repo: https://github.com/simplysarath/instagrammer. Note: Sharat initially proposed an Instagram-posting story that included cut features — redirected to the accurate v1 story.
+- **Open issues carried into /build:** Search denormalization (handled in step 11 — write `search_text` field at save time), Remove.bg 10MB limit (handled in step 6 — compress with `sharp`), Ximilar response schema verification (step 6), Android deep link config (step 3), video support deferred (data model supports it, UI skips it in v1).
