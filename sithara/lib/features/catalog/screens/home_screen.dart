@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../providers/product_provider.dart';
 import '../providers/collection_provider.dart';
 import '../../../shared/widgets/category_tile.dart';
+import '../../search/widgets/search_bar_widget.dart';
+import '../../search/widgets/search_results_widget.dart';
+import '../../search/providers/search_provider.dart';
 
 const _categories = [
   {'id': 'sarees', 'label': 'Sarees'},
@@ -12,47 +15,35 @@ const _categories = [
   {'id': 'kids', 'label': 'Kids'},
 ];
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final collectionsAsync = ref.watch(collectionListProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  String _searchQuery = '';
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sithara'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {/* TODO: open search */},
-          ),
-        ],
       ),
       body: Column(
         children: [
-          // Search bar placeholder (wired in step 11)
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: TextField(
-              readOnly: true,
-              onTap: () {/* TODO: wire search in step 11 */},
-              decoration: InputDecoration(
-                hintText: 'Search catalog...',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: const Icon(Icons.mic_none),
-                filled: true,
-                fillColor: Colors.grey.shade100,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+            child: SearchBarWidget(
+              onSearch: (q) => setState(() => _searchQuery = q),
             ),
           ),
           const SizedBox(height: 8),
           Expanded(
-            child: _buildGrid(context, ref, collectionsAsync),
+            child: _searchQuery.isEmpty
+                ? _buildGrid(context)
+                : _buildSearchResults(context),
           ),
         ],
       ),
@@ -63,10 +54,19 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildGrid(BuildContext context, WidgetRef ref, AsyncValue collectionsAsync) {
+  Widget _buildSearchResults(BuildContext context) {
+    final searchAsync = ref.watch(searchProvider((_searchQuery, null)));
+    return searchAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, __) => Center(child: Text('Search error: $e')),
+      data: (results) => SearchResultsWidget(results: results),
+    );
+  }
+
+  Widget _buildGrid(BuildContext context) {
+    final collectionsAsync = ref.watch(collectionListProvider);
     final collections = collectionsAsync.valueOrNull ?? [];
 
-    // Build combined list: categories first, then collections
     final categoryItems = _categories.map((c) => _GridItem(
       id: c['id']!,
       label: c['label']!,
@@ -102,11 +102,10 @@ class HomeScreen extends ConsumerWidget {
           return CategoryTile(
             categoryId: item.id,
             label: item.label,
-            productCount: 0, // collections show product count in step 8
+            productCount: 0,
             onTap: () => context.push('/collection/${item.id}'),
           );
         }
-        // Category tile — watch product count
         final products = ref.watch(productListProvider(item.id));
         final count = products.valueOrNull?.length ?? 0;
         return CategoryTile(
