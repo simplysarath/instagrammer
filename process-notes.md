@@ -50,3 +50,19 @@
 - **Active shaping:** Low at this stage — Sharat confirmed scaffold/model/infra priority unprompted (aligned with spec dependencies), accepted autonomous mode recommendation for his experience level, and chose no verification (straight through). No pushback on item order or granularity.
 - **Devpost submission:** APK + screenshots. No live deployment. Core story: "A private AI-powered product catalog for boutique owners — AI auto-tags garment type, fabric, color and occasion, owner searches inventory and shares curated selections to customers via WhatsApp or Instagram DM in under 30 seconds." GitHub repo: https://github.com/simplysarath/instagrammer. Note: Sharat initially proposed an Instagram-posting story that included cut features — redirected to the accurate v1 story.
 - **Open issues carried into /build:** Search denormalization (handled in step 11 — write `search_text` field at save time), Remove.bg 10MB limit (handled in step 6 — compress with `sharp`), Ximilar response schema verification (step 6), Android deep link config (step 3), video support deferred (data model supports it, UI skips it in v1).
+
+## /build
+
+- **Build mode:** Autonomous — 12 items, no verification checkpoints, committed after each item.
+- **Total items completed:** 12 of 12.
+- **Checklist revised during build:** No. All 12 items executed as planned.
+- **SDK issues encountered and resolved:**
+  - Appwrite doesn't support nested objects — tags stored as JSON string, decoded at read time. Handled in ProductRepository.
+  - Appwrite Dart SDK v14 uses `ExecutionMethod` enum (not string) for function calls — fixed in XimilarService and BgRemovalService.
+  - Riverpod `FamilyAsyncNotifier.build` override requires parameter named `arg` — caught by analyzer, fixed.
+  - `ActionChip` doesn't support delete — replaced with `RawChip` in TagChip widget.
+  - `withOpacity` deprecated — replaced with `withValues(alpha:)` throughout.
+  - Appwrite invite flow uses `Teams.updateMembershipStatus(teamId, membershipId, userId, secret)` — implemented `InviteParams` base64 encoding to pass all 4 params through a single deep link token.
+- **Flutter installed during build:** Flutter SDK 3.27.4 was not present on the machine — downloaded and installed at C:\Users\simpl\flutter\ before step 1 could proceed.
+- **Release APK status:** Android SDK not present on build machine (no Android Studio installed). APK build skipped during automated prep. See devpost-submission.md for step-by-step instructions to build the debug APK on any machine with Android Studio.
+- **Overall:** Clean build. flutter analyze passed at every step. All 12 checklist items completed in sequence with no skips or reversions.
