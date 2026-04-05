@@ -6,6 +6,8 @@ import '../data/product_repository.dart';
 import '../models/collection.dart';
 import '../models/product.dart';
 import '../../../shared/widgets/product_card.dart';
+import '../../share_tray/providers/share_tray_provider.dart';
+import '../../share_tray/models/share_item.dart';
 
 final _collectionRepoProvider = Provider<CollectionRepository>((ref) => CollectionRepository());
 final _productRepoProvider = Provider<ProductRepository>((ref) => ProductRepository());
@@ -67,9 +69,11 @@ class CollectionScreen extends ConsumerWidget {
                 product: product,
                 onTap: () => context.push('/product/${product.id}'),
                 onQuickAdd: () {
-                  // TODO: wire shareTrayProvider in step 10
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Added to share tray')),
+                  ref.read(shareTrayProvider.notifier).addItem(
+                    ShareItem(
+                      productId: product.id,
+                      imageFileId: product.primaryImageId,
+                    ),
                   );
                 },
               );

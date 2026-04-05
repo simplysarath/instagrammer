@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'core/theme/app_theme.dart';
 import 'router.dart';
+import 'features/share_tray/widgets/share_tray_bar.dart';
 
 final routerProvider = Provider<GoRouter>((ref) => createRouter(ref));
 
@@ -16,6 +17,12 @@ class SitharaApp extends ConsumerWidget {
       title: 'Sithara',
       theme: AppTheme.light(),
       routerConfig: router,
+      builder: (context, child) => Stack(
+        children: [
+          child ?? const SizedBox.shrink(),
+          const ShareTrayBar(),
+        ],
+      ),
     );
   }
 }

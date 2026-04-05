@@ -8,6 +8,8 @@ import '../models/product_tags.dart';
 import '../../../shared/widgets/tag_chip.dart';
 import '../../../shared/widgets/stock_indicator.dart';
 import '../../upload/data/storage_repository.dart';
+import '../../share_tray/providers/share_tray_provider.dart';
+import '../../share_tray/models/share_item.dart';
 
 final _productRepoProvider = Provider<ProductRepository>((ref) => ProductRepository());
 final _collectionRepoProvider = Provider<CollectionRepository>((ref) => CollectionRepository());
@@ -121,7 +123,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   void _addToShareTray(Product product) {
-    // TODO: wire shareTrayProvider in step 10
+    final activeImageId = product.imageIds.isNotEmpty
+        ? product.imageIds[_activeImageIndex]
+        : product.primaryImageId;
+    ref.read(shareTrayProvider.notifier).addItem(
+      ShareItem(
+        productId: product.id,
+        imageFileId: activeImageId,
+        description: product.description ?? '',
+      ),
+    );
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Added to share tray')),
     );

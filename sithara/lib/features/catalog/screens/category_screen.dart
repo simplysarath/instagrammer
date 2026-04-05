@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/product_provider.dart';
 import '../../../shared/widgets/product_card.dart';
+import '../../share_tray/providers/share_tray_provider.dart';
+import '../../share_tray/models/share_item.dart';
 
 class CategoryScreen extends ConsumerWidget {
   final String categoryId;
@@ -58,9 +60,11 @@ class CategoryScreen extends ConsumerWidget {
                 product: product,
                 onTap: () => context.push('/product/${product.id}'),
                 onQuickAdd: () {
-                  // TODO: wire shareTrayProvider in step 10
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Added to share tray')),
+                  ref.read(shareTrayProvider.notifier).addItem(
+                    ShareItem(
+                      productId: product.id,
+                      imageFileId: product.primaryImageId,
+                    ),
                   );
                 },
               );
