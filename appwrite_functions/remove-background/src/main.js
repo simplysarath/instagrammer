@@ -19,8 +19,9 @@ module.exports = async ({ req, res, log, error }) => {
   const endpoint = process.env.APPWRITE_FUNCTION_API_ENDPOINT;
   const projectId = process.env.APPWRITE_FUNCTION_PROJECT_ID;
   const apiKey = process.env.SITHARA_API_KEY ?? process.env.APPWRITE_FUNCTION_API_KEY;
+  const bucketId = process.env.APPWRITE_BUCKET_ID || 'product-images';
 
-  log(`endpoint=${endpoint} projectId=${projectId} hasApiKey=${!!apiKey} hasRemoveBgKey=${!!process.env.REMOVEBG_API_KEY}`);
+  log(`endpoint=${endpoint} projectId=${projectId} hasApiKey=${!!apiKey} hasRemoveBgKey=${!!process.env.REMOVEBG_API_KEY} bucketId=${bucketId}`);
 
   const client = new sdk.Client()
     .setEndpoint(endpoint)
@@ -31,10 +32,7 @@ module.exports = async ({ req, res, log, error }) => {
 
   try {
     // Download image from Appwrite Storage
-    const fileBytes = await storage.getFileDownload(
-      process.env.APPWRITE_BUCKET_ID || 'product-images',
-      fileId
-    );
+    const fileBytes = await storage.getFileDownload(bucketId, fileId);
 
     let imageBuffer = Buffer.from(fileBytes);
 
@@ -76,10 +74,7 @@ module.exports = async ({ req, res, log, error }) => {
     const resultBuffer = Buffer.from(await removeBgResponse.arrayBuffer());
 
     // Upload result PNG back to product-images bucket
-    const bucketId = process.env.APPWRITE_BUCKET_ID || 'product-images';
     const newFileId = sdk.ID.unique();
-
-    // node-appwrite requires InputFile for uploads
     const { InputFile } = sdk;
     const newFile = await storage.createFile(
       bucketId,
