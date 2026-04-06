@@ -18,7 +18,7 @@ module.exports = async ({ req, res, log, error }) => {
 
   const endpoint = process.env.APPWRITE_FUNCTION_API_ENDPOINT;
   const projectId = process.env.APPWRITE_FUNCTION_PROJECT_ID;
-  const apiKey = process.env.SITHARA_API_KEY;
+  const apiKey = process.env.SITHARA_API_KEY ?? process.env.APPWRITE_FUNCTION_API_KEY;
 
   log(`endpoint=${endpoint} projectId=${projectId} hasApiKey=${!!apiKey} hasRemoveBgKey=${!!process.env.REMOVEBG_API_KEY}`);
 
