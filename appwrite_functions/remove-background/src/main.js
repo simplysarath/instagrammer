@@ -22,7 +22,7 @@ module.exports = async ({ req, res, log, error }) => {
   const apiKey = process.env.SITHARA_API_KEY ?? process.env.APPWRITE_FUNCTION_API_KEY;
   const bucketId = process.env.APPWRITE_BUCKET_ID || 'product-images';
 
-  log(`endpoint=${endpoint} projectId=${projectId} hasApiKey=${!!apiKey} hasRemoveBgKey=${!!process.env.REMOVEBG_API_KEY} bucketId=${bucketId}`);
+  log(`endpoint=${endpoint} projectId=${projectId} hasApiKey=${!!apiKey} apiKeyPrefix=${apiKey?.substring(0,8)} hasRemoveBgKey=${!!process.env.REMOVEBG_API_KEY} bucketId=${bucketId}`);
 
   const client = new sdk.Client()
     .setEndpoint(endpoint)
