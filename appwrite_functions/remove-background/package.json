@@ -4,6 +4,7 @@
   "description": "Downloads image from Appwrite Storage, removes background via Remove.bg, re-uploads result",
   "main": "src/main.js",
   "dependencies": {
+    "form-data": "^4.0.0",
     "node-appwrite": "^13.0.0",
     "node-fetch": "^2.7.0",
     "sharp": "^0.33.0"
