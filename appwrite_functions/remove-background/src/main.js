@@ -16,9 +16,9 @@ module.exports = async ({ req, res, log, error }) => {
     return res.json({ error: 'file_id is required' }, 400);
   }
 
-  const endpoint = process.env.APPWRITE_ENDPOINT ?? process.env.APPWRITE_FUNCTION_API_ENDPOINT;
-  const projectId = process.env.APPWRITE_PROJECT_ID ?? process.env.APPWRITE_FUNCTION_PROJECT_ID;
-  const apiKey = process.env.APPWRITE_API_KEY;
+  const endpoint = process.env.APPWRITE_FUNCTION_API_ENDPOINT;
+  const projectId = process.env.APPWRITE_FUNCTION_PROJECT_ID;
+  const apiKey = process.env.SITHARA_API_KEY;
 
   log(`endpoint=${endpoint} projectId=${projectId} hasApiKey=${!!apiKey} hasRemoveBgKey=${!!process.env.REMOVEBG_API_KEY}`);
 
