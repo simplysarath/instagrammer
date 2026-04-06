@@ -1,4 +1,5 @@
 const sdk = require('node-appwrite');
+const { InputFile } = require('node-appwrite/file');
 const fetch = require('node-fetch');
 const sharp = require('sharp');
 const FormData = require('form-data');
@@ -75,7 +76,6 @@ module.exports = async ({ req, res, log, error }) => {
 
     // Upload result PNG back to product-images bucket
     const newFileId = sdk.ID.unique();
-    const { InputFile } = sdk;
     const newFile = await storage.createFile(
       bucketId,
       newFileId,
